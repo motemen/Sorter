@@ -1,16 +1,15 @@
-package test::Sorter;
+package t::sort;
 use strict;
 use warnings;
-use base qw(Test::Class);
+use base 'Test::Class';
 use Test::More;
-use Sorter;
 
-sub init : Test(1) {
-    new_ok 'Sorter';
+sub load : Test(startup => 1) {
+    use_ok 'Sorter';
 }
 
-sub values : Tests {
-    my $sorter = Sorter->new;
+sub values : Test(5) {
+    my $sorter = new_ok 'Sorter' or return;
     is_deeply [$sorter->get_values], [];
 
     $sorter->set_values;
@@ -23,8 +22,8 @@ sub values : Tests {
     is_deeply [$sorter->get_values], [1,2,3,4,5];
 }
 
-sub sort : Tests {
-    my $sorter = Sorter->new;
+sub sort : Test(12) {
+    my $sorter = new_ok 'Sorter' or return;
     $sorter->sort;
     is_deeply [$sorter->get_values], [];
 
